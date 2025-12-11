@@ -1,35 +1,19 @@
 {
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+  "version": 2,
+  "builds": [
+    { "src": "api/**/*.js", "use": "@vercel/node" },
+    { "src": "src/**/*", "use": "@vercel/static-build" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1.js" },
+    { "src": "/(.*)", "dest": "/" }
   ],
   "headers": [
     {
-      "source": "/manifest.json",
+      "source": "/(.*)",
       "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/manifest+json"
-        }
-      ]
-    },
-    {
-      "source": "/service-worker.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache"
-        }
-      ]
-    },
-    {
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache"
-        }
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
       ]
     }
   ]
